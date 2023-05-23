@@ -15,7 +15,7 @@ export const ModalStyled = styled.div`
   top: 50%;
   left: 50%;
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   background-color: transparent;
   border-radius: 12px;
   transform: translate(-50%, -50%);
@@ -23,7 +23,7 @@ export const ModalStyled = styled.div`
 
 export const Button = styled.button`
   position: absolute;
-  bottom: -40px;
+  top: -40px;
   right: 0;
   border: none;
   background-color: transparent;

@@ -5,8 +5,8 @@ const Button = ({ onHandleClickButtonLoad }) => {
   return <LoadButton onClick={onHandleClickButtonLoad}>Load more</LoadButton>;
 };
 
-export default Button;
-
 Button.propTypes = {
   onHandleClickButtonLoad: PropTypes.func.isRequired,
 };
+
+export default Button;

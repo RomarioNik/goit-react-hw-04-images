@@ -1,55 +1,42 @@
-import { Component } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { BackDrop, ModalStyled, Button, IconClose } from './Modal.styled';
 
-const modelRoot = document.querySelector('#root-modal');
+const Modal = ({ closeModal, children }) => {
+  useEffect(() => {
+    const handleKeyDown = e => {
+      if (e.code === 'Escape') {
+        closeModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
 
-class Modal extends Component {
-  static propTypes = {
-    onToggleModal: PropTypes.func.isRequired,
-    children: PropTypes.element,
-  };
+    return () => {
+      window.addEventListener('keydown', handleKeyDown);
+    };
+  }, [closeModal]);
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  componentWillUnmount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-  }
-
-  handleKeyDown = e => {
-    if (e.code === 'Escape') {
-      this.props.onToggleModal();
-    }
-  };
-
-  handleBackdropClick = e => {
+  const handleBackdropClick = e => {
     if (e.currentTarget === e.target) {
-      this.props.onToggleModal();
+      closeModal();
     }
   };
 
-  render() {
-    const { onToggleModal, children } = this.props;
+  return (
+    <BackDrop onClick={handleBackdropClick}>
+      <ModalStyled>
+        <Button type="button" onClick={closeModal} aria-label="Button close">
+          <IconClose />
+        </Button>
+        {children}
+      </ModalStyled>
+    </BackDrop>
+  );
+};
 
-    return createPortal(
-      <BackDrop onClick={this.handleBackdropClick}>
-        <ModalStyled>
-          <Button
-            type="button"
-            onClick={onToggleModal}
-            aria-label="Button close"
-          >
-            <IconClose />
-          </Button>
-          {children}
-        </ModalStyled>
-      </BackDrop>,
-      modelRoot
-    );
-  }
-}
+Modal.propTypes = {
+  closeModal: PropTypes.func.isRequired,
+  children: PropTypes.element,
+};
 
 export default Modal;

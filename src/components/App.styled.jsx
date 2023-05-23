@@ -6,3 +6,8 @@ export const Container = styled.div`
   margin-right: auto;
   padding: 0 15px 20px 15px;
 `;
+
+export const Picture = styled.img`
+  object-fit: cover;
+  border-radius: 12px;
+`;

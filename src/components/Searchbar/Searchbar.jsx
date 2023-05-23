@@ -1,57 +1,47 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Header, Form, Input, Button, Icon } from './Searchbar.styled';
 
-class Searchbar extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    search: PropTypes.string,
+const Searchbar = ({ onSubmit }) => {
+  const [search, setSearch] = useState('');
+
+  const handleInputChange = ({ target: { value } }) => {
+    setSearch(value);
   };
 
-  state = {
-    search: '',
-  };
-
-  handleInputChange = ({ target: { value } }) => {
-    this.setState({ search: value });
-  };
-
-  handleSubmitForm = e => {
+  const handleSubmitForm = e => {
     e.preventDefault();
-    const { search } = this.state;
-    const { onSubmit } = this.props;
-
     if (search.trim() === '') {
       alert('Enter a pokemon name!');
       return;
     }
 
     onSubmit(search);
-    this.setState({ search: '' });
+    setSearch('');
   };
 
-  render() {
-    const { search } = this.state;
+  return (
+    <Header>
+      <Form onSubmit={handleSubmitForm}>
+        <Button type="submit" area-label="search picture">
+          <Icon />
+        </Button>
+        <Input
+          type="text"
+          name="search"
+          value={search}
+          onChange={handleInputChange}
+          autocomplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </Form>
+    </Header>
+  );
+};
 
-    return (
-      <Header>
-        <Form onSubmit={this.handleSubmitForm}>
-          <Button type="submit" area-label="search picture">
-            <Icon />
-          </Button>
-          <Input
-            type="text"
-            name="search"
-            value={search}
-            onChange={this.handleInputChange}
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </Form>
-      </Header>
-    );
-  }
-}
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
 
 export default Searchbar;

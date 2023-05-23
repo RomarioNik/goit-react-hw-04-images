@@ -18,8 +18,3 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `;
-
-export const Picture = styled.img`
-  object-fit: cover;
-  border-radius: 12px;
-`;

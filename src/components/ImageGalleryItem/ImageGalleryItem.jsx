@@ -5,24 +5,24 @@ const ImageGalleryItem = ({
   webformatURL,
   largeImageURL,
   tags,
-  onHandleClickImage,
+  setCurrentImage,
 }) => {
   return (
     <ListItem>
       <Image
         src={webformatURL}
         alt={tags}
-        onClick={() => onHandleClickImage(largeImageURL)}
+        onClick={() => setCurrentImage({ largeImageURL, tags })}
       />
     </ListItem>
   );
 };
 
-export default ImageGalleryItem;
-
 ImageGalleryItem.propTypes = {
   webformatURL: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
-  onHandleClickImage: PropTypes.func.isRequired,
+  setCurrentImage: PropTypes.func.isRequired,
 };
+
+export default ImageGalleryItem;
